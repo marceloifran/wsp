@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar WhatsApp</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333333;
+        }
+        label {
+            font-size: 1rem;
+            color: #555555;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        button {
+            background: #25d366;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border: none;
+        }
+        button:hover {
+            background: #1ebe57;
+        }
+        .info {
+            font-size: 0.9rem;
+            color: #999999;
+            margin-top: 10px;
+        }
+
+        /* Media Queries para tamaños pequeños */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+            input, textarea, button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enviar mensaje por WhatsApp</h1>
+        <form id="whatsappForm">
+            <label for="phone">Número de teléfono (sin + ni 0):</label>
+            <input type="text" id="phone" name="phone" placeholder="Ej: 3876372475" required>
+
+            <label for="message">Mensaje (opcional):</label>
+            <textarea id="message" name="message" placeholder="Hola, me contacto para recibir información." rows="4"></textarea>
+
+            <button type="submit">Enviar mensaje</button>
+        </form>
+        <p class="info">Si no personalizás el mensaje, se usará uno predeterminado.</p>
+    </div>
+
+    <script>
+        document.getElementById("whatsappForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita que la página se recargue
+            const phone = document.getElementById("phone").value.trim();
+            let message = document.getElementById("message").value.trim();
+
+            // Si el mensaje está vacío, usar el mensaje por defecto
+            if (!message) {
+                message = "Hola, me contacto para recibir información.";
+            }
+
+            if (phone) {
+                // Codifica el mensaje para que sea compatible con la URL
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+                window.open(whatsappUrl, "_blank"); // Abre en una nueva pestaña
+            } else {
+                alert("Por favor, ingresá un número válido.");
+            }
+        });
+    </script>
+</body>
+</html>
